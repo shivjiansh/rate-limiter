@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  rate-limiter:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8080
+      ENABLE_REDIS: "true"
+      REDIS_ADDR: redis:6379
+      LIMIT: 1000
+      WINDOW: 1s
+      ALGORITHM: fixed_window
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
