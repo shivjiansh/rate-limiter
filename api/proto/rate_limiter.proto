@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package ratelimiter.v1;
+
+service RateLimiterService {
+  rpc Check (CheckRequest) returns (CheckResponse);
+}
+
+message CheckRequest {
+  string key = 1;
+  string endpoint = 2;
+}
+
+message CheckResponse {
+  bool allowed = 1;
+  int32 remaining = 2;
+}

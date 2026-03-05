@@ -1,0 +1,12 @@
+port: "8080"
+limit: 1000
+window: 1s
+algorithm: fixed_window
+burst: 1000
+enable_redis: true
+redis_addr: localhost:6379
+redis_password: ""
+redis_db: 0
+redis_pool_size: 256
+redis_min_idle: 64
+trusted_proxies: []

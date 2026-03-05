@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goshield
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goshield
+  template:
+    metadata:
+      labels:
+        app: goshield
+    spec:
+      containers:
+        - name: goshield
+          image: goshield:latest
+          ports:
+            - containerPort: 8080
