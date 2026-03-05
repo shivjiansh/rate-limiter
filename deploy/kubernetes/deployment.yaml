@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-rate-limiter
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: go-rate-limiter
+  template:
+    metadata:
+      labels:
+        app: go-rate-limiter
+    spec:
+      containers:
+        - name: rate-limiter
+          image: your-registry/go-rate-limiter:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENABLE_REDIS
+              value: "true"
+            - name: REDIS_ADDR
+              value: "redis:6379"
+            - name: LIMIT
+              value: "1000"
+            - name: WINDOW
+              value: "1s"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-rate-limiter
+spec:
+  selector:
+    app: go-rate-limiter
+  ports:
+    - port: 80
+      targetPort: 8080
